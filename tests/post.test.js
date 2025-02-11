@@ -17,7 +17,12 @@ afterAll(async () => {
 
 describe("User Model Test", () => {
   it("should create and save a user successfully", async () => {
-    const userData = { username: "john_doe", email: "john@example.com", password: "password123" };
+    // Create and save a user
+    const userData = { 
+      username: `john_doe_${Date.now()}`,
+      email: `john_${Date.now()}@example.com`,
+      password: "password123" 
+    };
     const user = new User(userData);
     const savedUser = await user.save();
 

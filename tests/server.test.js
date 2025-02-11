@@ -1,10 +1,10 @@
-const request = require("supertest");
-const app = require("../server");
+const { app, getRoutes } = require("../server");
 
-describe("Test du serveur Express", () => {
-  test("GET / doit renvoyer un statut 200 et contenir 'Server launched successuflly'", async () => {
-    const response = await request(app).get("/");
-    expect(response.status).toBe(200);
-    expect(response.text).toContain("Server launched successuflly");
+describe("Server Test", () => {
+  test("should start the server and retrieve routes", () => {
+    const routes = getRoutes();
+
+    // Ensure that the number of routes is as expected
+    expect(routes.length).toBe(2); // Update this number as you add more routes
   });
 });

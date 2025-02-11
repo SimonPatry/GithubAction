@@ -6,7 +6,7 @@ app.set("view engine", "ejs");
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
-// Fonction pour récupérer les routes définies dans l'application
+// Function to retrieve defined routes in the application
 const getRoutes = () => {
   const routes = [];
   app._router.stack.forEach((middleware) => {
@@ -23,10 +23,10 @@ const getRoutes = () => {
   return routes;
 };
 
+// Exporting the app and getRoutes for testing
+module.exports = { app, getRoutes };
 
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
 }
-
-module.exports = { app, getRoutes };

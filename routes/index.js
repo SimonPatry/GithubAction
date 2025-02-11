@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("index", { message: "Server launched successuflly" });
+  res.send("Server launched successfully");
 });
 
-app.get("/about", (req, res) => {
-  res.send("About page!");
+router.get("/about", (req, res) => {
+  res.send("About my app");
 });
 
 module.exports = router;
