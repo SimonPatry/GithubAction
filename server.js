@@ -1,14 +1,32 @@
 const express = require("express");
 const app = express();
 
-// Configuration d'EJS
 app.set("view engine", "ejs");
 
-// Route principale
-app.get("/", (req, res) => {
-  res.render("index", { message: "Hello, CI/CD avec GitHub Actions !" });
-});
+const indexRouter = require("./routes/index");
+app.use("/", indexRouter);
 
-// Lancement du serveur
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Serveur démarré sur http://localhost:${PORT}`));
+// Fonction pour récupérer les routes définies dans l'application
+const getRoutes = () => {
+  const routes = [];
+  app._router.stack.forEach((middleware) => {
+    if (middleware.route) {
+      routes.push(middleware.route);
+    } else if (middleware.name === 'router') {
+      middleware.handle.stack.forEach((handler) => {
+        if (handler.route) {
+          routes.push(handler.route);
+        }
+      });
+    }
+  });
+  return routes;
+};
+
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
+}
+
+module.exports = { app, getRoutes };
