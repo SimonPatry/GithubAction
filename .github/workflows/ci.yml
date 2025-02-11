@@ -33,5 +33,20 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
-      # Steps to checkout code, setup Node, install dependencies, and run linter
+      - name: Checkout code
+        uses: actions/checkout@v3  # get code from repo
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # keep it up to date
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx  # Adjust extensions as needed
+
+      - name: Run Prettier Check
+        run: npx prettier --check .  # Check formatting
 
