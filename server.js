@@ -27,6 +27,6 @@ const getRoutes = () => {
 module.exports = { app, getRoutes };
 
 if (require.main === module) {
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 3005;
   app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
 }

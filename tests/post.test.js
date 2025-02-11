@@ -1,18 +1,14 @@
 const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
 const User = require("../models/User");
 
-let mongoServer;
-
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
-  await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  // Use the MONGODB_URI environment variable for the connection
+  const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
+  await mongoose.connect(uri);
 });
 
 afterAll(async () => {
   await mongoose.disconnect();
-  await mongoServer.stop();
 });
 
 describe("User Model Test", () => {
@@ -32,8 +28,9 @@ describe("User Model Test", () => {
   });
 
   it("should throw a validation error if required fields are missing", async () => {
-    const user = new User({});
+    const user = new User({}); // No required fields
 
+    // Expect the save operation to throw an error
     await expect(user.save()).rejects.toThrow();
   });
 });

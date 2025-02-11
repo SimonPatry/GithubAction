@@ -1,20 +1,16 @@
 const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
-const User = require("../models/User");   // Adjust the path as necessary
-const Post = require("../models/Post");   // Adjust the path as necessary
-const Comment = require("../models/Comment"); // Adjust the path as necessary
-
-let mongoServer;
+const User = require("../models/User");
+const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
-  await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  // Use the MONGODB_URI environment variable for the connection
+  const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
+  await mongoose.connect(uri);
 });
 
 afterAll(async () => {
   await mongoose.disconnect();
-  await mongoServer.stop();
 });
 
 describe("Comment Model Test", () => {
@@ -44,8 +40,8 @@ describe("Comment Model Test", () => {
     // Validate that the comment is saved correctly
     expect(savedComment._id).toBeDefined();
     expect(savedComment.content).toBe(commentData.content);
-    expect(savedComment.post.toString()).toEqual(post._id.toString()); // Use toString() to compare ObjectIDs
-    expect(savedComment.author.toString()).toEqual(user._id.toString()); // Use toString() to compare ObjectIDs
+    expect(savedComment.post.toString()).toEqual(post._id.toString());
+    expect(savedComment.author.toString()).toEqual(user._id.toString());
   });
 
   it("should throw a validation error if required fields are missing", async () => {
