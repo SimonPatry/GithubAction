@@ -1,36 +1,40 @@
 name: CI Pipeline for Node.js
 
-on:
+on: # all but main branch
   push:
+    branches-ignore:
+      - main
   pull_request:
+    branches-ignore:
+      - main
 
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # Test sur plusieurs versions de Node.js
+        # test more than one node version
         node-version: [18, 20]
     steps:
-      # Récupère le code du repo
+      # get code from repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          # Active le cache pour npm
+          # caching install - gain time
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Install dependencies
         run: npm ci
-      # Vérifie le code
+      # lint the code
       - name: Run Linter (ESLint)
         run: npx eslint .
-      # Vérifie le formatage
+      # check writing issues 
       - name: Run Prettier Check
         run: npx prettier --check .
-      # Exécute les tests
+      # launch tests
       - name: Run Tests
         run: npm test
 
@@ -40,5 +44,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+        # "feat: ... " => can add theme : "feat(auth): ..."
+        # "fix: ... "
+        # "docs: ... "
       - name: Check Commit Messages (Commitlint)
         uses: wagoid/commitlint-github-action@v5
