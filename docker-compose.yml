@@ -22,4 +22,3 @@ services:
     command: >
       sh -c "mkdir -p logs && npm test | tee logs/test_results.log;
              if [ $? -ne 0 ]; then echo '❌ TESTS ÉCHOUÉS - Consultez logs/test_results.log' && exit 1; fi"
-

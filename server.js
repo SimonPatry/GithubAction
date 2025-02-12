@@ -12,7 +12,7 @@ const getRoutes = () => {
   app._router.stack.forEach((middleware) => {
     if (middleware.route) {
       routes.push(middleware.route);
-    } else if (middleware.name === 'router') {
+    } else if (middleware.name === "router") {
       middleware.handle.stack.forEach((handler) => {
         if (handler.route) {
           routes.push(handler.route);
@@ -28,5 +28,7 @@ module.exports = { app, getRoutes };
 
 if (require.main === module) {
   const PORT = process.env.PORT || 3005;
-  app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
+  app.listen(PORT, () =>
+    console.log(`Server started on http://localhost:${PORT}`),
+  );
 }

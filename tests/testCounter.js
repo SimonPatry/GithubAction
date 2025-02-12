@@ -2,12 +2,12 @@
 
 const incrementTestCount = () => {
   global.testCount++;
-  console.log(global.testCount)
+  console.log(global.testCount);
 };
 
 const getTestCount = () => {
-  console.log("get count")
-  console.log(global.testCount)
+  console.log("get count");
+  console.log(global.testCount);
   return global.testCount;
 };
 

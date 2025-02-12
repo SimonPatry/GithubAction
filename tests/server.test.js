@@ -1,13 +1,11 @@
 const { app, getRoutes } = require("../server");
 const request = require("supertest");
 
-describe('API Endpoints and Tests Count', () => {
-
+describe("API Endpoints and Tests Count", () => {
   beforeAll(() => {
-    console.log("checking start of last file")
+    console.log("checking start of last file");
     console.log(getTestCount());
   });
-
 
   test("GET / doit renvoyer un statut 200 et contenir 'Server launched successfully'", async () => {
     const response = await request(app).get("/");

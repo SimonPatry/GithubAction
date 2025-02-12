@@ -14,7 +14,7 @@ describe("Routing Test", () => {
     expect(response.status).toBe(200);
     expect(response.text).toContain("About my app");
     incrementTestCount();
-    console.log("checking")
-    console.log(getTestCount())
+    console.log("checking");
+    console.log(getTestCount());
   });
 });

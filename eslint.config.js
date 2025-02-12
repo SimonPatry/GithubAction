@@ -9,9 +9,9 @@ export default [
       sourceType: "module",
       ecmaVersion: 2021,
       globals: {
-        ...globals.browser,  // Include browser globals
-        ...globals.node,     // Include Node.js globals
-        ...globals.jest,     // Include Jest globals
+        ...globals.browser, // Include browser globals
+        ...globals.node, // Include Node.js globals
+        ...globals.jest, // Include Jest globals
         // includes manually set globals for jest
         incrementTestCount: "readonly",
         getTestCount: "readonly",
@@ -23,5 +23,5 @@ export default [
       "constructor-super": "error",
     },
   },
-  pluginJs.configs.recommended,  // Include recommended rules
+  pluginJs.configs.recommended, // Include recommended rules
 ];
