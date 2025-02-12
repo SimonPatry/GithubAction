@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         # Test sur plusieurs versions de Node.js
-        node-version: [16, 18, 20]
+        node-version: [18, 20]
     steps:
       # Récupère le code du repo
       - name: Checkout repository
