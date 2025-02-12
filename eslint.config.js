@@ -6,7 +6,8 @@ export default [
   {
     files: ["**/*.js"],
     languageOptions: {
-      sourceType: "module",  // `EMAC15`
+      sourceType: "module",
+      ecmaVersion: 2021,
       globals: {
         ...globals.browser,  // Include browser globals
         ...globals.node,     // Include Node.js globals
