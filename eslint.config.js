@@ -19,6 +19,9 @@ export default [
         testCount: "readonly",
       },
     },
+    rules: {
+      "constructor-super": "error",
+    },
   },
   pluginJs.configs.recommended,  // Include recommended rules
 ];
