@@ -1,52 +1,44 @@
-name: CI testing on Node Server
+name: CI Pipeline for Node.js
 
 on:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
 
 jobs:
-  test: 
+  lint-and-test:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    strategy:
+      matrix:
+        # Test sur plusieurs versions de Node.js
+        node-version: [16, 18, 20]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3  # get code from repo ????????
+      # Récupère le code du repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
+          # Active le cache pour npm
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
       - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test 
-
-      
-
-  lint:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3  # get code from repo
-
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # keep it up to date
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run ESLint
-        run: npx eslint . --ext .js,.jsx,.ts,.tsx  # Adjust extensions as needed
-
+        run: npm ci
+      # Vérifie le code
+      - name: Run Linter (ESLint)
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx
+      # Vérifie le formatage
       - name: Run Prettier Check
-        run: npx prettier --check .  # Check formatting
+        run: npx prettier --check .
+      # Exécute les tests
+      - name: Run Tests
+        run: npm test
 
+  check-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Commit Messages (Commitlint)
+        uses: wagoid/commitlint-github-action@v5
