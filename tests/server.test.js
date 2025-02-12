@@ -1,4 +1,4 @@
-import { app, getRoutes } from "../server.js";  // Ensure you have the .js extension
+import { app, getRoutes } from "../server.js"; // Ensure you have the .js extension
 import request from "supertest";
 
 describe("API Endpoints and Tests Count", () => {
