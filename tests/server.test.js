@@ -3,22 +3,27 @@ const request = require("supertest");
 
 describe("API Endpoints and Tests Count", () => {
   beforeAll(() => {
-    console.log("checking start of last file");
-    console.log(getTestCount());
+    // before testing
   });
 
   test("GET / doit renvoyer un statut 200 et contenir 'Server launched successfully'", async () => {
     const response = await request(app).get("/");
     expect(response.status).toBe(200);
     expect(response.text).toContain("Server launched successfully");
+    incrementTestCount();
+  });
+
+  test("GET /about doit renvoyer un statut 200 et contenir 'About my app'", async () => {
+    const response = await request(app).get("/about");
+    expect(response.status).toBe(200);
+    expect(response.text).toContain("About my app");
+    incrementTestCount();
   });
 
   afterAll(() => {
     const endpoints = getRoutes();
-    const executedTestCount = getTestCount(); // Get the total test count
-    console.log(`Number of API endpoints: ${endpoints.length}`);
-    console.log(`Number of executed tests: ${executedTestCount}`);
-    expect(executedTestCount).toBe(endpoints.length); // Assert that counts match
-    // resetTestCount(); // Reset count if needed for next runs
+    const executedTestCount = getTestCount();
+    expect(executedTestCount).toBe(endpoints.length);
+    resetTestCount();
   });
 });
