@@ -31,7 +31,7 @@ jobs:
       # lint the code
       - name: Run Linter (ESLint)
         run: npx eslint .
-      # check writing issues 
+      # check writing issues
       - name: Run Prettier Check
         run: npx prettier --check .
       # launch tests
