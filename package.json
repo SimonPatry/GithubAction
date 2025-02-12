@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "testing du cicd git avec un serveur node",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "jest",
     "start": "nodemon server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "eslint '**/*.js'"
   },
   "repository": {
     "type": "git",
