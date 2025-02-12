@@ -1,9 +1,9 @@
-const { app, getRoutes } = require("../server");
-const request = require("supertest");
+import { app, getRoutes } from "../server.js";  // Ensure you have the .js extension
+import request from "supertest";
 
 describe("API Endpoints and Tests Count", () => {
   beforeAll(() => {
-    // before testing
+    // Optional setup before tests run
   });
 
   test("GET / doit renvoyer un statut 200 et contenir 'Server launched successfully'", async () => {

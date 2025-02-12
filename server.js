@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
+import indexRouter from "./routes/index.js";
+
 const app = express();
 
 app.set("view engine", "ejs");
-
-const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
 // Function to retrieve defined routes in the application
@@ -24,9 +24,10 @@ const getRoutes = () => {
 };
 
 // Exporting the app and getRoutes for testing
-module.exports = { app, getRoutes };
+export { app, getRoutes };
 
-if (require.main === module) {
+// Start the server only if this file is the main module
+if (import.meta.url === `file://${process.argv[1]}`) {
   const PORT = process.env.PORT || 3005;
   app.listen(PORT, () =>
     console.log(`Server started on http://localhost:${PORT}`),
